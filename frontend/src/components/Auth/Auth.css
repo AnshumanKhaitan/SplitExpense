@@ -123,6 +123,40 @@
   color: var(--text-muted);
 }
 
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 16px 0;
+  color: var(--text-muted);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.auth-divider:not(:empty)::before {
+  margin-right: 12px;
+}
+
+.auth-divider:not(:empty)::after {
+  margin-left: 12px;
+}
+
+.auth-divider span {
+  font-size: 14px;
+  text-transform: lowercase;
+}
+
+.google-auth-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 /* Background elements for "WOW" effect */
 .bg-blob {
   position: absolute;
@@ -134,5 +168,12 @@
   z-index: 1;
 }
 
-.blob-1 { top: -100px; right: -100px; }
-.blob-2 { bottom: -100px; left: -100px; }
+.blob-1 {
+  top: -100px;
+  right: -100px;
+}
+
+.blob-2 {
+  bottom: -100px;
+  left: -100px;
+}

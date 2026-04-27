@@ -13,6 +13,9 @@
     "vite": "^8.0.9"
   },
   "dependencies": {
+    "@better-auth/infra": "^0.2.5",
+    "@react-oauth/google": "^0.13.5",
+    "better-auth": "^1.6.9",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.11.0",
     "react": "^19.2.5",
