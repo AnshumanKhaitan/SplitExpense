@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { User, Mail, Lock, UserPlus, ArrowLeft } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
+import { GoogleLogin } from '@react-oauth/google'
 import './Auth.css'
 
 const Register = () => {
@@ -12,7 +13,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // Based on the original main.js logic
     try {
       const res = await fetch("http://localhost:8080/api/users/register", {
         method: "POST",
@@ -32,6 +32,17 @@ const Register = () => {
       console.error("Registration error:", error);
       alert("An error occurred during registration.");
     }
+  }
+
+  const handleGoogleSuccess = (credentialResponse) => {
+    console.log("Google Signup Success:", credentialResponse);
+    localStorage.setItem("userName", "Google User");
+    navigate('/home');
+  }
+
+  const handleGoogleError = () => {
+    console.error("Google Signup Failed");
+    alert("Google Signup failed. Please try again.");
   }
 
   return (
@@ -113,6 +124,20 @@ const Register = () => {
             <UserPlus size={18} />
             Get Started
           </motion.button>
+
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+
+          <div className="google-auth-container">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="outline"
+              shape="pill"
+              text="signup_with"
+            />
+          </div>
         </form>
 
         <div className="auth-footer">

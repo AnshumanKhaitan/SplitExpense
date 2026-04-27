@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
+import { GoogleLogin } from '@react-oauth/google'
 import './Auth.css'
 
 const Login = () => {
@@ -11,7 +12,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // Based on the original main.js logic
     try {
       const res = await fetch("http://localhost:8080/api/users/login", {
         method: "POST",
@@ -24,7 +24,7 @@ const Login = () => {
         localStorage.setItem("userId", data.id);
         localStorage.setItem("userName", data.name);
         alert("Login successful");
-        // navigate('/dashboard') // Future route
+        navigate('/home');
       } else {
         alert("Login failed. Please check your credentials.");
       }
@@ -32,6 +32,18 @@ const Login = () => {
       console.error("Login error:", error);
       alert("An error occurred during login.");
     }
+  }
+
+  const handleGoogleSuccess = (credentialResponse) => {
+    console.log("Google Login Success:", credentialResponse);
+    // In a real app, you'd extract the name from the token
+    localStorage.setItem("userName", "Google User"); 
+    navigate('/home');
+  }
+
+  const handleGoogleError = () => {
+    console.error("Google Login Failed");
+    alert("Google Login failed. Please try again.");
   }
 
   return (
@@ -101,6 +113,19 @@ const Login = () => {
             <LogIn size={18} />
             Sign In
           </motion.button>
+
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+
+          <div className="google-auth-container">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="filled_blue"
+              shape="pill"
+            />
+          </div>
         </form>
 
         <div className="auth-footer">
